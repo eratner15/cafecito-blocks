@@ -21,6 +21,64 @@ const SHOWCASE_DEMO = {
   brandColor: '#1f3a2e',
 };
 
+const PROSPECT_OVERRIDES = {
+  'garrido-hvac': {
+    business: 'Garrido HVAC',
+    recordTypeName: 'Service',
+    stages: ['Intake', 'Quote', 'Scheduled', 'In Progress', 'Complete'],
+    brandColor: '#b8412c',
+  },
+};
+
+const PROSPECT_RECORDS = {
+  'garrido-hvac': [
+    {
+      public_id: 'GAR-2418',
+      customer_email: 'mariana.silva@example.com',
+      label: 'AC compressor replacement · Kendall',
+      stage: 'In Progress',
+      events: [
+        { ts: '2026-05-04T08:14:00Z', kind: 'intake',   title: 'Llamada recibida', body: 'Cliente reporta AC sin enfriar — visita programada para el viernes.', actor: 'Lucia (recepcionista AI)' },
+        { ts: '2026-05-05T11:00:00Z', kind: 'visit',    title: 'Técnico en sitio', body: 'Compresor identificado como falla. Cotización enviada $2,140.',     actor: 'Roberto G.' },
+        { ts: '2026-05-05T15:48:00Z', kind: 'approval', title: 'Cotización aprobada', body: null,                                                                actor: 'Mariana S.' },
+        { ts: '2026-05-09T07:30:00Z', kind: 'progress', title: 'Compresor instalado', body: 'Unidad nueva instalada. Prueba de estabilidad de 30 minutos en curso.', actor: 'Roberto G.' },
+      ],
+    },
+    {
+      public_id: 'GAR-2419',
+      customer_email: 'jorge.morales@example.com',
+      label: 'Mini-split install · 2BR Brickell condo',
+      stage: 'Scheduled',
+      events: [
+        { ts: '2026-05-02T10:00:00Z', kind: 'intake',   title: 'Request received',  body: 'Condo HOA approval pending. Install date TBD.',         actor: 'Lucia (AI recepcionista)' },
+        { ts: '2026-05-08T14:30:00Z', kind: 'progress', title: 'HOA approval in',   body: 'HOA cleared install. Scheduled for May 14.',           actor: 'Office' },
+      ],
+    },
+    {
+      public_id: 'GAR-2420',
+      customer_email: 'rosa.delcampo@example.com',
+      label: 'Annual maintenance · 3-unit Hialeah residence',
+      stage: 'Complete',
+      events: [
+        { ts: '2026-04-26T08:00:00Z', kind: 'visit',   title: 'Tune-up complete',  body: 'Serpentines limpios, filtros cambiados en 3 unidades.', actor: 'Roberto G.' },
+        { ts: '2026-04-26T12:30:00Z', kind: 'invoice', title: 'Factura enviada',   body: '$385. Neto 15.',                                       actor: 'Office' },
+        { ts: '2026-05-02T09:14:00Z', kind: 'payment', title: 'Pago recibido',     body: 'Pagado en total.',                                     actor: 'Stripe' },
+      ],
+    },
+    {
+      public_id: 'GAR-2421',
+      customer_email: 'thomas.b@example.com',
+      label: 'Emergency dispatch · Coral Gables · pregnant occupant',
+      stage: 'Complete',
+      events: [
+        { ts: '2026-05-06T19:42:00Z', kind: 'intake',   title: 'After-hours emergency', body: 'House at 84°F. Auto-paged on-call tech.', actor: 'Block 12 · Missed Call Recovery' },
+        { ts: '2026-05-06T19:55:00Z', kind: 'visit',    title: 'Tech on-site',           body: 'Capacitor failure. Replaced.',            actor: 'Roberto G.' },
+        { ts: '2026-05-06T20:30:00Z', kind: 'complete', title: 'House cooling, billed',  body: '$480 (after-hours rate).',                actor: 'Roberto G.' },
+      ],
+    },
+  ],
+};
+
 const SEEDED_RECORDS = [
   {
     public_id: 'DEMO-1042',
@@ -109,6 +167,9 @@ async function getRecords(env, prospectSlug) {
   // For the canonical demo (no prospect slug), return seeded records.
   if (!prospectSlug) return SEEDED_RECORDS;
 
+  // Per-prospect static seed (deploy skill writes these into PROSPECT_RECORDS).
+  if (PROSPECT_RECORDS[prospectSlug]) return PROSPECT_RECORDS[prospectSlug];
+
   // For real instances, read from D1 if a STATUS_DB binding exists.
   // (D1 not yet provisioned for status block; falls through to seeded demo.)
   if (env.STATUS_DB) {
@@ -139,7 +200,7 @@ function findRecord(records, publicId) {
 
 async function renderIndex(env, prospectSlug) {
   const records = await getRecords(env, prospectSlug);
-  const ctx = SHOWCASE_DEMO;
+  const ctx = (prospectSlug && PROSPECT_OVERRIDES[prospectSlug]) ? PROSPECT_OVERRIDES[prospectSlug] : SHOWCASE_DEMO;
   const html = `<!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(ctx.business)} — ${esc(ctx.recordTypeName)} Status</title>
@@ -195,7 +256,7 @@ async function renderRecord(env, prospectSlug, publicId) {
   const record = findRecord(records, publicId);
   if (!record) return new Response('Record not found', { status: 404 });
 
-  const ctx = SHOWCASE_DEMO;
+  const ctx = (prospectSlug && PROSPECT_OVERRIDES[prospectSlug]) ? PROSPECT_OVERRIDES[prospectSlug] : SHOWCASE_DEMO;
   // The AI-written customer update is generated when ANTHROPIC_API_KEY exists.
   // For the canonical demo, we use a pre-baked string to avoid Claude calls in the hot path.
   const update = await maybeGenerateUpdate(env, record);
@@ -237,6 +298,10 @@ async function maybeGenerateUpdate(env, record) {
     'DEMO-1042': 'Carlos finished installing your new compressor this morning. We are running a 30-minute stability test before closing out — you should be cool by lunch. Invoice will arrive by email tomorrow.',
     'DEMO-1043': 'Your HOA cleared the install. We are scheduled for May 14 — Carlos will text you the morning-of with an arrival window.',
     'DEMO-1044': 'Your annual maintenance is complete and your invoice is fully paid. No action needed from you.',
+    'GAR-2418':  'Roberto terminó de instalar su nuevo compresor esta mañana. Estamos haciendo una prueba de estabilidad de 30 minutos — usted debe sentir el aire frío antes del almuerzo. La factura llegará por correo electrónico mañana.',
+    'GAR-2419':  'Su HOA aprobó la instalación. Estamos programados para el 14 de mayo — Roberto le enviará un mensaje esa mañana con la ventana de llegada.',
+    'GAR-2420':  'Su mantenimiento anual está completo y su factura está pagada en total. No se necesita acción de su parte.',
+    'GAR-2421':  'Su llamada de emergencia entró fuera de horario, fuimos a su casa en 13 minutos y reemplazamos el capacitor que había fallado. Casa enfriando ahora. Le cobramos la tarifa de emergencia ($480) — invoice ya enviado.',
   };
   if (PRE_BAKED[record.public_id]) return PRE_BAKED[record.public_id];
 

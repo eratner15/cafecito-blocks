@@ -1,6 +1,23 @@
 // Missed Call Recovery — Block 12
 // Twilio missed-call webhook → instant SMS → Claude reply handler → book or escalate
 
+const PROSPECT_OVERRIDES = {
+  'garrido-hvac': {
+    business: 'Garrido HVAC',
+    callsMissed: 38,
+    smsAutoSent: 38,
+    smsReplied: 27,
+    bookedAutomatically: 19,
+    escalatedToHuman: 5,
+    sample: [
+      { phone: '(305) 555-0871', missedAt: '7:42pm (after-hours)', smsSent: '7:42pm', reply: '"AC went out. House is 84F. Wife is pregnant."', outcome: 'Emergency → human dispatch at 7:44pm', recovered: 480 },
+      { phone: '(786) 555-0233', missedAt: '12:18pm (lunch rush)', smsSent: '12:18pm', reply: '"Compressor making grinding noise. Need someone this week."', outcome: 'Auto-booked Thu 10am', recovered: 320 },
+      { phone: '(305) 555-0654', missedAt: '9:58pm', smsSent: '9:58pm', reply: '"Just asking for an estimate for new mini-split."', outcome: 'Qualified lead → email digest tomorrow', recovered: null },
+      { phone: '(305) 555-0492', missedAt: '6:33am Saturday', smsSent: '6:33am', reply: '"Mantenimiento anual. ¿Tienen disponibilidad esta semana?"', outcome: 'Auto-replied in Spanish, booked Wed 2pm', recovered: 165 },
+    ],
+  },
+};
+
 const SHOWCASE = {
   business: 'Coastline Plumbing',
   callsMissed: 47,
@@ -18,11 +35,15 @@ const SHOWCASE = {
 export async function handleRecovery(request, env, ctx, url, block, _routerProspectSlug) {
   const segments = url.pathname.split('/').filter(Boolean);
   let prospectSlug = null;
+  let scope = SHOWCASE;
   if (segments[0] && segments[0] !== 'api' && env.INSTANCES) {
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
-    if (hit) prospectSlug = segments[0];
+    if (hit) {
+      prospectSlug = segments[0];
+      if (PROSPECT_OVERRIDES[prospectSlug]) scope = { ...SHOWCASE, ...PROSPECT_OVERRIDES[prospectSlug] };
+    }
   }
-  return html200(renderPage(SHOWCASE, prospectSlug, block));
+  return html200(renderPage(scope, prospectSlug, block));
 }
 
 function renderPage(s, prospectSlug, block) {

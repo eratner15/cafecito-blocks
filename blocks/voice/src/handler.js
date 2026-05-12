@@ -13,7 +13,15 @@ const SHOWCASE = {
 };
 
 const PROSPECT_OVERRIDES = {
-  // 'garrido-hvac': { business: 'Garrido HVAC', phone: '+1-786-...', ... },
+  'garrido-hvac': {
+    business: 'Garrido HVAC',
+    phone: '+1-305-555-0142',
+    phoneDisplay: '(305) 555-0142',
+    hours: 'Mon–Sat 7am–7pm · 24/7 emergency dispatch',
+    industry: 'HVAC · Miami / Hialeah / Kendall',
+    voiceName: 'Lucia',
+    languages: ['English', 'Spanish'],
+  },
 };
 
 export async function handleVoice(request, env, ctx, url, block, _routerProspectSlug) {

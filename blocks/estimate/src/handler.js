@@ -9,7 +9,13 @@ const SHOWCASE = {
   brandColor: '#1a3a6b',
 };
 
-const PROSPECT_OVERRIDES = {};
+const PROSPECT_OVERRIDES = {
+  'garrido-hvac': {
+    business: 'Garrido HVAC',
+    vertical: 'HVAC service',
+    brandColor: '#b8412c',
+  },
+};
 
 const PRE_BAKED_ESTIMATE = {
   summary: 'Algae bloom remediation + 30-day chemistry stabilization for an in-ground gunite pool, ~15,000 gal.',
@@ -48,7 +54,10 @@ export async function handleEstimate(request, env, ctx, url, block, _routerProsp
   let scope = SHOWCASE;
   if (segments[0] && segments[0] !== 'api' && segments[0] !== 'sample-quote' && env.INSTANCES) {
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
-    if (hit) prospectSlug = segments[0];
+    if (hit) {
+      prospectSlug = segments[0];
+      if (PROSPECT_OVERRIDES[prospectSlug]) scope = { ...SHOWCASE, ...PROSPECT_OVERRIDES[prospectSlug] };
+    }
   }
 
   if (segments.includes('sample-quote')) {

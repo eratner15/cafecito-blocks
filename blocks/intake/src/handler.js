@@ -4,6 +4,7 @@
 import { classifyMessage } from './lib/classifier.js';
 import { sendEmail, emailShell } from './lib/email.js';
 import { sendSMS } from './lib/twilio.js';
+import { resolveProspect } from './lib/resolve-prospect.js';
 
 const SHOWCASE = {
   business: 'Lavin Eviction Law',
@@ -22,7 +23,11 @@ export async function handleIntake(request, env, ctx, url, block, _routerProspec
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
     if (hit) {
       prospectSlug = segments[0];
-      if (PROSPECT_OVERRIDES[prospectSlug]) scope = { ...SHOWCASE, ...PROSPECT_OVERRIDES[prospectSlug] };
+      let _instance = null;
+      try { _instance = JSON.parse(hit); } catch (_e) {}
+      const _kvOverrides = (_instance && _instance.overrides) || {};
+      const _localOverrides = (typeof PROSPECT_OVERRIDES !== 'undefined' && PROSPECT_OVERRIDES[prospectSlug]) || {};
+      scope = { ...scope, ..._localOverrides, ..._kvOverrides };
     }
   }
 

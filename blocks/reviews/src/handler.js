@@ -2,6 +2,8 @@
 // Pulls Google reviews via lib/google-places, drafts responses in the owner's voice,
 // owner approves with one click via magic-link from a daily digest email.
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const SHOWCASE = {
   business: 'Café Versailles · Little Havana',
   rating: 4.2,
@@ -19,11 +21,18 @@ const SHOWCASE_REVIEWS = [
 export async function handleReviews(request, env, ctx, url, block, _routerProspectSlug) {
   const segments = url.pathname.split('/').filter(Boolean);
   let prospectSlug = null;
+  let scope = { ...SHOWCASE };
   if (segments[0] && segments[0] !== 'api' && env.INSTANCES) {
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
-    if (hit) prospectSlug = segments[0];
+    if (hit) {
+      prospectSlug = segments[0];
+      try {
+        const _inst = JSON.parse(hit);
+        if (_inst && _inst.overrides) Object.assign(scope, _inst.overrides);
+      } catch (_e) {}
+    }
   }
-  return html200(renderDigest(SHOWCASE, SHOWCASE_REVIEWS, prospectSlug, block));
+  return html200(renderDigest(scope, SHOWCASE_REVIEWS, prospectSlug, block));
 }
 
 function renderDigest(s, reviews, prospectSlug, block) {

@@ -2,6 +2,8 @@
 // Canonical demo wraps Suite Air (existing live HVAC receptionist on +1-954-858-5311).
 // Per-prospect instances customize the phone number + business name + voice.
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const SHOWCASE = {
   business: 'Suite Air HVAC',
   phone: '+1-954-858-5311',
@@ -30,10 +32,14 @@ export async function handleVoice(request, env, ctx, url, block, _routerProspect
   let scope = SHOWCASE;
   if (segments[0] && segments[0] !== 'api' && env.INSTANCES) {
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
-    if (hit) prospectSlug = segments[0];
-  }
-  if (prospectSlug && PROSPECT_OVERRIDES[prospectSlug]) {
-    scope = { ...SHOWCASE, ...PROSPECT_OVERRIDES[prospectSlug] };
+    if (hit) {
+      prospectSlug = segments[0];
+      let _instance = null;
+      try { _instance = JSON.parse(hit); } catch (_e) {}
+      const _kvOverrides = (_instance && _instance.overrides) || {};
+      const _localOverrides = (typeof PROSPECT_OVERRIDES !== 'undefined' && PROSPECT_OVERRIDES[prospectSlug]) || {};
+      scope = { ...scope, ..._localOverrides, ..._kvOverrides };
+    }
   }
 
   return html200(renderPage(scope, prospectSlug, block));

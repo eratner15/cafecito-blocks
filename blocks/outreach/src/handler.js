@@ -1,6 +1,8 @@
 // Cold Outreach Engine — Block 08
 // UCC / Sunbiz / Apollo data → Claude personalization → sequencer → calendar.
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const SHOWCASE_PIPELINE = {
   campaign: 'MCA brokers · Q2 2026',
   prospectsLoaded: 412,
@@ -20,11 +22,18 @@ const SHOWCASE_PIPELINE = {
 export async function handleOutreach(request, env, ctx, url, block, _routerProspectSlug) {
   const segments = url.pathname.split('/').filter(Boolean);
   let prospectSlug = null;
+  let scope = { ...SHOWCASE_PIPELINE };
   if (segments[0] && segments[0] !== 'api' && env.INSTANCES) {
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
-    if (hit) prospectSlug = segments[0];
+    if (hit) {
+      prospectSlug = segments[0];
+      try {
+        const _inst = JSON.parse(hit);
+        if (_inst && _inst.overrides) Object.assign(scope, _inst.overrides);
+      } catch (_e) {}
+    }
   }
-  return html200(renderPage(SHOWCASE_PIPELINE, prospectSlug, block));
+  return html200(renderPage(scope, prospectSlug, block));
 }
 
 function renderPage(p, prospectSlug, block) {

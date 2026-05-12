@@ -2,6 +2,7 @@
 // Pulls from QuickBooks, Toast, Mindbody, Salesforce, LiquidityBook into one screen.
 
 import { kpiTile, statusBadge, timelineRow, dashboardShell } from './lib/places-cards.js';
+import { resolveProspect } from './lib/resolve-prospect.js';
 
 const SHOWCASE = {
   business: 'La Cubana Cocina · Coral Way',

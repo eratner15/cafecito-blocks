@@ -2,6 +2,7 @@
 // Photo upload → Claude Vision → labor + materials → printable HTML quote.
 
 import { estimateFromPhoto, renderQuoteHTML } from './lib/vision-quote.js';
+import { resolveProspect } from './lib/resolve-prospect.js';
 
 const SHOWCASE = {
   business: 'South Beach Pool Service',
@@ -56,7 +57,11 @@ export async function handleEstimate(request, env, ctx, url, block, _routerProsp
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
     if (hit) {
       prospectSlug = segments[0];
-      if (PROSPECT_OVERRIDES[prospectSlug]) scope = { ...SHOWCASE, ...PROSPECT_OVERRIDES[prospectSlug] };
+      let _instance = null;
+      try { _instance = JSON.parse(hit); } catch (_e) {}
+      const _kvOverrides = (_instance && _instance.overrides) || {};
+      const _localOverrides = (typeof PROSPECT_OVERRIDES !== 'undefined' && PROSPECT_OVERRIDES[prospectSlug]) || {};
+      scope = { ...scope, ..._localOverrides, ..._kvOverrides };
     }
   }
 

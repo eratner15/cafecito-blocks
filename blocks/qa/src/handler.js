@@ -2,6 +2,8 @@
 // Upload call log CSV → Claude classifier categorizes missed revenue,
 // unanswered questions, language mismatch, followup gaps. PDF report out.
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const SHOWCASE_AUDIT = {
   business: 'Sample Service Co.',
   period: 'Apr 1 – Apr 30, 2026',
@@ -22,11 +24,18 @@ const SHOWCASE_AUDIT = {
 export async function handleQa(request, env, ctx, url, block, _routerProspectSlug) {
   const segments = url.pathname.split('/').filter(Boolean);
   let prospectSlug = null;
+  let scope = { ...SHOWCASE_AUDIT };
   if (segments[0] && segments[0] !== 'api' && env.INSTANCES) {
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
-    if (hit) prospectSlug = segments[0];
+    if (hit) {
+      prospectSlug = segments[0];
+      try {
+        const _inst = JSON.parse(hit);
+        if (_inst && _inst.overrides) Object.assign(scope, _inst.overrides);
+      } catch (_e) {}
+    }
   }
-  return html200(renderReport(SHOWCASE_AUDIT, prospectSlug, block));
+  return html200(renderReport(scope, prospectSlug, block));
 }
 
 function renderReport(a, prospectSlug, block) {

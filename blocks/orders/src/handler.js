@@ -1,6 +1,8 @@
 // AI Order Desk — Block 11
 // Fax / email / photo / PDF intake → normalize → missing-info flags → ops email.
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const SHOWCASE = {
   business: 'Aceves Wholesale Produce',
   todayOrders: 47,
@@ -17,11 +19,18 @@ const SHOWCASE = {
 export async function handleOrders(request, env, ctx, url, block, _routerProspectSlug) {
   const segments = url.pathname.split('/').filter(Boolean);
   let prospectSlug = null;
+  let scope = { ...SHOWCASE };
   if (segments[0] && segments[0] !== 'api' && env.INSTANCES) {
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
-    if (hit) prospectSlug = segments[0];
+    if (hit) {
+      prospectSlug = segments[0];
+      try {
+        const _inst = JSON.parse(hit);
+        if (_inst && _inst.overrides) Object.assign(scope, _inst.overrides);
+      } catch (_e) {}
+    }
   }
-  return html200(renderDesk(SHOWCASE, prospectSlug, block));
+  return html200(renderDesk(scope, prospectSlug, block));
 }
 
 function renderDesk(s, prospectSlug, block) {

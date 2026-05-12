@@ -1,6 +1,8 @@
 // Bilingual Conversion Layer — Block 13
 // Drop-in script that adds ES/EN overlay + lead capture to an existing site.
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const SHOWCASE = {
   business: 'Coral Gables Dental',
   liveAt: 'coralgablesdental.com (demo)',

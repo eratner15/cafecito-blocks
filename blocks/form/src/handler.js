@@ -2,6 +2,8 @@
 // Generates a 3-question vertical-specific form. Used by sales as a swap-out
 // for prospects with generic contact forms.
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const VERTICALS = {
   hvac: {
     name: 'HVAC',
@@ -70,7 +72,11 @@ export async function handleForm(request, env, ctx, url, block, _routerProspectS
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
     if (hit) {
       prospectSlug = segments[0];
-      if (PROSPECT_OVERRIDES[prospectSlug]) scope = { ...SHOWCASE, ...PROSPECT_OVERRIDES[prospectSlug] };
+      let _instance = null;
+      try { _instance = JSON.parse(hit); } catch (_e) {}
+      const _kvOverrides = (_instance && _instance.overrides) || {};
+      const _localOverrides = (typeof PROSPECT_OVERRIDES !== 'undefined' && PROSPECT_OVERRIDES[prospectSlug]) || {};
+      scope = { ...scope, ..._localOverrides, ..._kvOverrides };
     }
   }
 

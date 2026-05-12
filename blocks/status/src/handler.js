@@ -14,6 +14,8 @@
 // Customer-update generation: Claude turns the latest 3 events into one
 // plain-English paragraph the customer sees at the top of the record.
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const SHOWCASE_DEMO = {
   business: 'Cafecito Demo Co.',
   recordTypeName: 'Project',

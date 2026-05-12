@@ -1,6 +1,8 @@
 // SMS Reactivation Agent — Block 07
 // CSV import → Twilio outbound SMS → Claude reply handler → Cal.com booking
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const SHOWCASE = {
   business: 'Brickell Glow Med Spa',
   segment: 'Customers who haven\'t booked in 90+ days',
@@ -17,11 +19,18 @@ const SHOWCASE = {
 export async function handleReactivate(request, env, ctx, url, block, _routerProspectSlug) {
   const segments = url.pathname.split('/').filter(Boolean);
   let prospectSlug = null;
+  let scope = { ...SHOWCASE };
   if (segments[0] && segments[0] !== 'api' && env.INSTANCES) {
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
-    if (hit) prospectSlug = segments[0];
+    if (hit) {
+      prospectSlug = segments[0];
+      try {
+        const _inst = JSON.parse(hit);
+        if (_inst && _inst.overrides) Object.assign(scope, _inst.overrides);
+      } catch (_e) {}
+    }
   }
-  return html200(renderDashboard(SHOWCASE, prospectSlug, block));
+  return html200(renderDashboard(scope, prospectSlug, block));
 }
 
 function renderDashboard(s, prospectSlug, block) {

@@ -1,6 +1,8 @@
 // Personal Brand Site + Booking — Block 10
 // AI-written copy + Cal.com + Stripe + content engine. Personal-brand starter.
 
+import { resolveProspect } from './lib/resolve-prospect.js';
+
 const SHOWCASE = {
   business: 'Dr. Andres Vega · Family Medicine',
   vertical: 'family practice',
@@ -19,11 +21,18 @@ const SHOWCASE = {
 export async function handleBrand(request, env, ctx, url, block, _routerProspectSlug) {
   const segments = url.pathname.split('/').filter(Boolean);
   let prospectSlug = null;
+  let scope = { ...SHOWCASE };
   if (segments[0] && segments[0] !== 'api' && env.INSTANCES) {
     const hit = await env.INSTANCES.get(`${block.slug}/${segments[0]}`);
-    if (hit) prospectSlug = segments[0];
+    if (hit) {
+      prospectSlug = segments[0];
+      try {
+        const _inst = JSON.parse(hit);
+        if (_inst && _inst.overrides) Object.assign(scope, _inst.overrides);
+      } catch (_e) {}
+    }
   }
-  return html200(renderSite(SHOWCASE, prospectSlug, block));
+  return html200(renderSite(scope, prospectSlug, block));
 }
 
 function renderSite(s, prospectSlug, block) {

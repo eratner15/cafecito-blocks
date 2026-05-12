@@ -1,0 +1,60 @@
+name: Mirror blocks to per-block repos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'blocks/**'
+      - 'lib/**'
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        block:
+          - voice
+          - intake
+          - estimate
+          - reviews
+          - scan
+          - docs
+          - reactivate
+          - outreach
+          - ops
+          - brand
+          - orders
+          - recovery
+          - bilingual
+          - status
+          - qa
+          - form
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build mirror payload for ${{ matrix.block }}
+        run: |
+          set -e
+          BLOCK="${{ matrix.block }}"
+          if [ ! -d "blocks/$BLOCK" ]; then
+            echo "blocks/$BLOCK does not exist yet — skipping"
+            exit 0
+          fi
+          rm -rf /tmp/mirror
+          mkdir -p /tmp/mirror
+          cp -r "blocks/$BLOCK"/* /tmp/mirror/
+          if [ -d lib ]; then
+            mkdir -p /tmp/mirror/lib
+            cp -r lib/* /tmp/mirror/lib/
+          fi
+          cd /tmp/mirror
+          git init -q
+          git checkout -q -b main
+          git config user.email "actions@github.com"
+          git config user.name "cafecito-blocks-mirror"
+          git add -A
+          git commit -q -m "mirror: $BLOCK @ ${{ github.sha }}"
+          git remote add origin "https://x-access-token:${{ secrets.MIRROR_TOKEN }}@github.com/eratner15/block-$BLOCK.git"
+          git push -f origin main

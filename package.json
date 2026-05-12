@@ -1,0 +1,32 @@
+{
+  "name": "cafecito-blocks",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sixteen sellable AI products — one repo, sixteen Cloudflare Workers.",
+  "workspaces": [
+    "blocks/*",
+    "lib"
+  ],
+  "scripts": {
+    "deploy:voice": "cd blocks/voice && npx wrangler deploy",
+    "deploy:intake": "cd blocks/intake && npx wrangler deploy",
+    "deploy:estimate": "cd blocks/estimate && npx wrangler deploy",
+    "deploy:reviews": "cd blocks/reviews && npx wrangler deploy",
+    "deploy:scan": "cd blocks/scan && npx wrangler deploy",
+    "deploy:docs": "cd blocks/docs && npx wrangler deploy",
+    "deploy:reactivate": "cd blocks/reactivate && npx wrangler deploy",
+    "deploy:outreach": "cd blocks/outreach && npx wrangler deploy",
+    "deploy:ops": "cd blocks/ops && npx wrangler deploy",
+    "deploy:brand": "cd blocks/brand && npx wrangler deploy",
+    "deploy:orders": "cd blocks/orders && npx wrangler deploy",
+    "deploy:recovery": "cd blocks/recovery && npx wrangler deploy",
+    "deploy:bilingual": "cd blocks/bilingual && npx wrangler deploy",
+    "deploy:status": "cd blocks/status && npx wrangler deploy",
+    "deploy:qa": "cd blocks/qa && npx wrangler deploy",
+    "deploy:form": "cd blocks/form && npx wrangler deploy",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.69.0"
+  }
+}

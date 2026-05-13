@@ -5,9 +5,9 @@
 
 import { resolveProspect } from './lib/resolve-prospect.js';
 
-const REALTIME_MODEL = 'gpt-4o-realtime-preview-2024-12-17';
+const REALTIME_MODEL = 'gpt-realtime'; // GA model name (replaced gpt-4o-realtime-preview-* beta)
 const REALTIME_VOICE = 'shimmer'; // warm female; bilingual capable
-const REALTIME_SESSION_URL = 'https://api.openai.com/v1/realtime/sessions';
+const REALTIME_SESSION_URL = 'https://api.openai.com/v1/realtime/client_secrets'; // GA endpoint (Beta /v1/realtime/sessions retired)
 const MAX_SESSION_SECONDS = 90;
 
 const SHOWCASE = {
@@ -75,12 +75,12 @@ async function mintRealtimeSession(env, scope) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: REALTIME_MODEL,
-        voice: REALTIME_VOICE,
-        modalities: ['audio', 'text'],
-        instructions,
-        input_audio_transcription: { model: 'whisper-1' },
-        turn_detection: { type: 'server_vad', threshold: 0.5, prefix_padding_ms: 300, silence_duration_ms: 600 },
+        session: {
+          type: 'realtime',
+          model: REALTIME_MODEL,
+          audio: { output: { voice: REALTIME_VOICE } },
+          instructions,
+        },
       }),
     });
     if (!res.ok) {
@@ -88,12 +88,15 @@ async function mintRealtimeSession(env, scope) {
       return json({ ok: false, error: `OpenAI session ${res.status}: ${t}` }, 500);
     }
     const data = await res.json();
+    // GA response shape: { value: "ek_...", expires_at: <epoch> } at top level (Beta nested it under client_secret).
+    const clientSecret = data.value || data.client_secret?.value || null;
+    const expiresAt = data.expires_at || data.client_secret?.expires_at || null;
     return json({
       ok: true,
       model: REALTIME_MODEL,
       voice: REALTIME_VOICE,
-      client_secret: data.client_secret?.value,
-      expires_at: data.client_secret?.expires_at,
+      client_secret: clientSecret,
+      expires_at: expiresAt,
       max_session_seconds: MAX_SESSION_SECONDS,
       business: scope.business,
       voiceName: scope.voiceName,

@@ -3,7 +3,7 @@
 # worker source tree so wrangler can bundle them.
 #
 # Canonical source: /home/eratner/cafecito-blocks/
-# Deploy target:    /home/eratner/cafecito-ai/new-hire/blocks/handlers/
+# Deploy target:    /home/eratner/cafecito-ai/blocks/handlers/
 #
 # Run after editing any blocks/<name>/src/handler.js or any lib/*.js:
 #   bash scripts/sync-to-cafecito-ai.sh
@@ -11,7 +11,7 @@
 
 set -euo pipefail
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
-DST="/home/eratner/cafecito-ai/new-hire/blocks/handlers"
+DST="/home/eratner/cafecito-ai/blocks/handlers"
 mkdir -p "$DST"
 
 # Lib modules

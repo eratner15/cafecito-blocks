@@ -63,7 +63,7 @@ ${styles()}
   <p class="lede">Block 07 is $1,500 setup · $400/mo + SMS pass-through. Typical lift: 12-18% reactivation rate on 90+ day inactive lists. Anchor on "your CRM has 800 customers who haven't been back in 6 months — that's $40k+ in deferred revenue." Deploy: <code>/cafecito-blocks:reactivate &lt;prospect-slug&gt;</code></p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-reactivate">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-reactivate">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · reactivate.cafecito-ai.com</footer>
 </main>

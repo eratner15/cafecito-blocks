@@ -77,7 +77,7 @@ ${styles()}
   <p class="lede">Best fit: ANY service business in Miami / Houston / LA / NYC / Phoenix / Chicago / Orlando whose customer base is &gt;25% Spanish-preferring but whose website is English-only. Deploy: <code>/cafecito-blocks:bilingual &lt;prospect-slug&gt;</code></p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-bilingual">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-bilingual">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · bilingual.cafecito-ai.com · drop-in script at /embed.js</footer>
 </main>

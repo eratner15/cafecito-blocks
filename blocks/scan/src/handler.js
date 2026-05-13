@@ -78,7 +78,7 @@ ${styles()}
   <p class="lede">Sales runs <code>/cafecito-blocks:scan &lt;prospect-slug&gt;</code> and gets back: a pre-run citability report + competitor comparison + 30-day forecast + cold-pitch email that links the report.</p>
   <div class="cta-row">
     <a class="btn primary" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn" href="https://github.com/eratner15/block-scan">GitHub mirror</a>
+    <a class="btn" href="https://github.com/cafecito-ai/block-scan">GitHub mirror</a>
     <a class="btn" href="https://cafecito-ai.com/boostai/">Live BoostAI scanner →</a>
   </div>
   <footer>Cafecito Blocks · scan.cafecito-ai.com · per-prospect instances at <code>/&lt;prospect-slug&gt;/</code></footer>

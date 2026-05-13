@@ -43,7 +43,7 @@ export async function handleOps(request, env, ctx, url, block, _routerProspectSl
       <div style="font-size:14px;line-height:1.5;color:#b8d4c8;">Connects QuickBooks · Toast · Mindbody · Salesforce · ServiceTitan · LiquidityBook. Claude reads the data each morning + writes a 5-bullet "what to pay attention to today" brief. Auto-actions on inventory orders, payroll anomalies, POS shorts. $4,500 setup · $850/mo. Deploy: <code style="font-family:ui-monospace,monospace;background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:3px;">/cafecito-blocks:ops &lt;prospect-slug&gt;</code></div>
       <div style="margin:14px 0 0;display:flex;gap:8px;flex-wrap:wrap;">
         <a href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}" style="display:inline-block;padding:9px 16px;border-radius:4px;border:1px solid #f5f1ea;color:#f5f1ea;text-decoration:none;font:500 13px/1 ui-sans-serif,system-ui;">Playbook →</a>
-        <a href="https://github.com/eratner15/block-ops" style="display:inline-block;padding:9px 16px;border-radius:4px;border:1px solid #f5f1ea;color:#f5f1ea;text-decoration:none;font:500 13px/1 ui-sans-serif,system-ui;">GitHub mirror →</a>
+        <a href="https://github.com/cafecito-ai/block-ops" style="display:inline-block;padding:9px 16px;border-radius:4px;border:1px solid #f5f1ea;color:#f5f1ea;text-decoration:none;font:500 13px/1 ui-sans-serif,system-ui;">GitHub mirror →</a>
       </div>
     </div>
     <div style="font:400 12px/1.5 ui-sans-serif,system-ui;color:#6b6660;border-top:1px solid #d9d4ca;padding-top:18px;">Cafecito Blocks · ops.cafecito-ai.com · ${esc(prospectSlug || 'canonical demo')}</div>`;

@@ -122,7 +122,7 @@ ${styles()}
   <p class="lede">Block 16 replaces generic "Contact Us" forms with vertical-specific quote flows that ask the 3 questions an estimator would ask first. Conversion lift: 2-4× on submitted leads. $1,500 setup · $200/mo. Deploy: <code>/cafecito-blocks:form &lt;prospect-slug&gt;</code></p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-form">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-form">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · form.cafecito-ai.com</footer>
 </main>

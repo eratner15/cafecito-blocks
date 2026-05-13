@@ -56,5 +56,5 @@ jobs:
           git config user.name "cafecito-blocks-mirror"
           git add -A
           git commit -q -m "mirror: $BLOCK @ ${{ github.sha }}"
-          git remote add origin "https://x-access-token:${{ secrets.MIRROR_TOKEN }}@github.com/eratner15/block-$BLOCK.git"
+          git remote add origin "https://x-access-token:${{ secrets.MIRROR_TOKEN }}@github.com/cafecito-ai/block-$BLOCK.git"
           git push -f origin main

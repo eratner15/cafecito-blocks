@@ -289,7 +289,7 @@ ${styles()}
   <p class="lede">Block 12 is <strong>$750 setup · $250/mo</strong>. Highest-ROI block in the arsenal — HVAC / plumbers / contractors miss 40+ calls/month, each is $200-500 in deferred revenue. Pays back in week 1.</p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-recovery">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-recovery">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · recovery.cafecito-ai.com</footer>
 </main>

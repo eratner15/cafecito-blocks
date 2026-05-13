@@ -123,7 +123,7 @@ ${styles()}
   <p class="lede">Block 02 is a $2k setup / $300/mo product. Replaces a $25k/yr intake coordinator at law firms, PM cos, MCA brokers, contractors. Deploy a per-prospect form: <code>/cafecito-blocks:intake &lt;prospect-slug&gt;</code></p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-intake">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-intake">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · intake.cafecito-ai.com · per-prospect at <code>/&lt;slug&gt;/</code></footer>
 </main>

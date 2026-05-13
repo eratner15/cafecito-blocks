@@ -186,7 +186,7 @@ ${styles(s.brandColor)}
   <p class="lede">Sales runs <code>/cafecito-blocks:estimate &lt;prospect-slug&gt;</code>. Per-prospect instance at <code>estimate.cafecito-ai.com/&lt;slug&gt;/</code> with branding + vertical + rates pre-tuned.</p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-estimate">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-estimate">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · estimate.cafecito-ai.com</footer>
 </main>

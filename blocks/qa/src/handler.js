@@ -76,7 +76,7 @@ ${styles()}
   <p class="lede">This audit IS the cold pitch. Send the URL during the discovery call. The prospect sees their own number ($14k/mo in flagged-recoverable revenue) before you ask for the meeting. $750 setup (one-time audit) · $1,500 setup + $400/mo (ongoing weekly audit).</p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-qa">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-qa">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · qa.cafecito-ai.com · per-prospect audits at <code>/&lt;slug&gt;/</code></footer>
 </main>

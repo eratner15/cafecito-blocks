@@ -71,7 +71,7 @@ ${styles(s.brandColor)}
   <section class="meta-block">
     <h2>For sales</h2>
     <p>Block 10 is $1,500 setup · $200/mo. Cheapest entry-point block — fits solo doctors, dentists, attorneys, consultants. AI-written copy + Cal.com + Stripe + blog generator. Deploy: <code>/cafecito-blocks:brand &lt;prospect-slug&gt;</code></p>
-    <p><a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Playbook</a> <a class="btn-outline" href="https://github.com/eratner15/block-brand">GitHub mirror</a></p>
+    <p><a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Playbook</a> <a class="btn-outline" href="https://github.com/cafecito-ai/block-brand">GitHub mirror</a></p>
   </section>
   <footer>Cafecito Blocks · brand.cafecito-ai.com</footer>
 </main>

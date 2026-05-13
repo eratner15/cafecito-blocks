@@ -56,7 +56,7 @@ ${styles()}
   <p class="lede">Block 11 is $4,000 setup · $750/mo. Best fit: wholesalers, restaurant suppliers, distributors, B2B food/parts. Anchor on "your ops manager spends 2 hours/day transcribing orders." That's $30k/yr in labor. Deploy: <code>/cafecito-blocks:orders &lt;prospect-slug&gt;</code></p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-orders">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-orders">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · orders.cafecito-ai.com</footer>
 </main>

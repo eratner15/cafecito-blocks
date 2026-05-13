@@ -177,7 +177,7 @@ ${styles()}
   <p class="lede">Sales hands prospects this URL: <code>https://voice.cafecito-ai.com/&lt;your-slug&gt;/</code>. A working receptionist with YOUR business name, YOUR hours, YOUR services. Ships in one day.</p>
   <div class="cta-row">
     <a class="btn primary" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn" href="https://github.com/eratner15/block-voice">GitHub mirror</a>
+    <a class="btn" href="https://github.com/cafecito-ai/block-voice">GitHub mirror</a>
     <a class="btn" href="https://cafecito-ai.com/suite-air/">See the Suite Air build</a>
   </div>
   <footer>Cafecito Blocks · voice.cafecito-ai.com · per-prospect instances at <code>/&lt;prospect-slug&gt;/</code></footer>

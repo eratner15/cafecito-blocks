@@ -81,7 +81,7 @@ ${styles()}
   <p class="lede">Block 08 is $5,000 setup · $1,200/mo + data costs. Most expensive block but highest revenue per closed deal. Best fit: any service business with average deal size > $5k where outbound is the growth lever. Deploy: <code>/cafecito-blocks:outreach &lt;prospect-slug&gt;</code></p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-outreach">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-outreach">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · outreach.cafecito-ai.com</footer>
 </main>

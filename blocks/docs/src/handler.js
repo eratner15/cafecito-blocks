@@ -70,7 +70,7 @@ ${styles()}
   <p class="lede">Sales runs <code>/cafecito-blocks:docs &lt;prospect-slug&gt;</code> with a folder of their public PDFs. The skill ingests them, builds a hosted demo at <code>docs.cafecito-ai.com/&lt;slug&gt;/</code>, drafts the cold-pitch.</p>
   <div class="cta-row">
     <a class="btn primary" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn" href="https://github.com/eratner15/block-docs">GitHub mirror</a>
+    <a class="btn" href="https://github.com/cafecito-ai/block-docs">GitHub mirror</a>
     <a class="btn" href="${esc(s.liveUrl)}">Live PKM Wiki →</a>
   </div>
   <footer>Cafecito Blocks · docs.cafecito-ai.com · per-prospect instances at <code>/&lt;prospect-slug&gt;/</code></footer>

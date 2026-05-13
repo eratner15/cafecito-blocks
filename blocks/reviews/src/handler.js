@@ -58,7 +58,7 @@ ${styles()}
   <p class="lede">Block 04 is $1k setup · $250/mo. Anchor on: "61% of your reviews have no owner response. Google local-pack ranking weights response rate." Deploy: <code>/cafecito-blocks:reviews &lt;prospect-slug&gt;</code></p>
   <div class="cta-row">
     <a class="btn-outline" href="https://cafecito-ai.com/new-hire/blocks/${esc(block.slug)}">Read the playbook</a>
-    <a class="btn-outline" href="https://github.com/eratner15/block-reviews">GitHub mirror</a>
+    <a class="btn-outline" href="https://github.com/cafecito-ai/block-reviews">GitHub mirror</a>
   </div>
   <footer>Cafecito Blocks · reviews.cafecito-ai.com</footer>
 </main>

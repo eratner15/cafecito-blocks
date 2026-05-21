@@ -24,6 +24,7 @@
     "deploy:status": "cd blocks/status && npx wrangler deploy",
     "deploy:qa": "cd blocks/qa && npx wrangler deploy",
     "deploy:form": "cd blocks/form && npx wrangler deploy",
+    "deploy:keywest": "cd blocks/keywest && npx wrangler deploy",
     "smoke": "node scripts/smoke.mjs"
   },
   "devDependencies": {
